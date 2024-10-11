@@ -49,15 +49,17 @@ const AudioUpload = () => {
     formData.append("language", language);
 
     try {
+      // Gửi yêu cầu đến API để upload file âm thanh và lấy kết quả
       const response = await axios.post("https://voiceai-nk9v.onrender.com/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      // Lưu kết quả đã thêm dấu câu
       setTranscribedText(response.data.text);
       setError("");
     } catch (error) {
-      setError(error.response.data.error || "An error occurred while transcribing the audio.");
+      setError(error.response?.data?.error || "An error occurred while transcribing the audio.");
     }
   };
 
@@ -90,8 +92,8 @@ const AudioUpload = () => {
       {error && <div className="error">{error}</div>}
       {transcribedText && (
         <div className="result">
-          <h3>Transcribed Text:</h3>
-          <p>{transcribedText}</p>
+          <h3>Transcribed Text with Punctuation:</h3> {/* Chỉnh lại tiêu đề để rõ ràng hơn */}
+          <p>{transcribedText}</p> {/* Hiển thị văn bản đã được thêm dấu câu */}
         </div>
       )}
     </div>
